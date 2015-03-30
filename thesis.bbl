@@ -1,0 +1,33 @@
+\begin{thebibliography}{5}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Benno~Rice and Engel(2014)]{website:behave}
+Richard~Jones Benno~Rice and Jens Engel.
+\newblock Behave, Diciembre 2014.
+\newblock URL \url{https://pythonhosted.org/behave/}.
+
+\bibitem[CobraTeam(2014)]{website:splinter}
+CobraTeam.
+\newblock Splinter, Diciembre 2014.
+\newblock URL \url{http://splinter.cobrateam.info/en/latest/}.
+
+\bibitem[Foundation(2014)]{website:djangoproject}
+Django~Software Foundation.
+\newblock The web framework for perfectionists with deadlines, Diciembre 2014.
+\newblock URL \url{https://www.djangoproject.com/}.
+
+\bibitem[Smart(2014)]{BDDinAction}
+John~Ferguson Smart.
+\newblock \emph{BDD in Action}.
+\newblock Manning Publications, 2014.
+
+\bibitem[Willmer(2014)]{website:djangobehave}
+Rachel Willmer.
+\newblock A django testrunner for the behave bdd module, Diciembre 2014.
+\newblock URL \url{https://github.com/django-behave/django-behave}.
+
+\end{thebibliography}

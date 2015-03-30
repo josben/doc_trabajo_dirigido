@@ -1,0 +1,57 @@
+This is BibTeX, Version 0.99d (TeX Live 2012/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: thesis.aux
+A level-1 auxiliary file: chapters/chapter1.aux
+A level-1 auxiliary file: chapters/chapter2.aux
+A level-1 auxiliary file: chapters/chapter3.aux
+A level-1 auxiliary file: chapters/chapter4.aux
+A level-1 auxiliary file: chapters/chapter5.aux
+A level-1 auxiliary file: chapters/chapter6.aux
+A level-1 auxiliary file: chapters/chapter7.aux
+A level-1 auxiliary file: chapters/chapter8.aux
+A level-1 auxiliary file: appendix/A.aux
+A level-1 auxiliary file: appendix/B.aux
+A level-1 auxiliary file: appendix/C.aux
+The style file: plainnat.bst
+Database file #1: references.bib
+You've used 5 entries,
+            2773 wiz_defined-function locations,
+            627 strings with 5552 characters,
+and the built_in function-call counts, 1586 in all, are:
+= -- 132
+> -- 61
+< -- 5
++ -- 23
+- -- 18
+* -- 93
+:= -- 247
+add.period$ -- 15
+call.type$ -- 5
+change.case$ -- 20
+chr.to.int$ -- 5
+cite$ -- 10
+duplicate$ -- 80
+empty$ -- 161
+format.name$ -- 25
+if$ -- 332
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 2
+newline$ -- 33
+num.names$ -- 20
+pop$ -- 61
+preamble$ -- 1
+purify$ -- 16
+quote$ -- 0
+skip$ -- 68
+stack$ -- 0
+substring$ -- 10
+swap$ -- 9
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 50
+warning$ -- 0
+while$ -- 15
+width$ -- 0
+write$ -- 67

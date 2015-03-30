@@ -1,0 +1,246 @@
+\begin{savequote}[75mm]
+%Nulla facilisi. In vel sem. Morbi id urna in diam dignissim feugiat. Proin molestie tortor eu velit. Aliquam erat volutpat. Nullam ultrices, diam tempus vulputate egestas, eros pede varius leo.
+%\qauthor{Quoteauthor Lastname}
+\end{savequote}
+
+\chapter{Pruebas del Sistema}
+
+\newthought{En} el capítulo tres vimos como la metodología BDD es una herramienta útil que
+fomenta la colaboración entre desarrolladores, testers y clientes. Entendimos
+como BDD es una técnica de desarrollo ágil de software.
+
+En el capítulo cuatro vimos la aplicación de BDD en el proyecto e hicimos los
+escenarios respectivos para cumplir los requerimientos de funcionalidad del
+sistema.
+
+\begin{itemize}
+    \item Registro de Vehículos
+    \item Registro de Ingreso de personas
+    \item Registro de mantenimiento
+    \item Reportes
+    \item Notificaciones
+\end{itemize}
+
+En este capítulo mostraremos como esos escenarios que ya definimos nos sirven
+para hacer las pruebas finales.
+
+Los escenarios y el código que desarrollamos para que pasen los tests eran solo
+una muestra de como el sistema iba a cumplir todos los requerimientos de
+funcionalidad.
+
+Hasta este punto del proyecto ya se tiene el sistema completo. Y ahora es cuando
+usaremos esos mismos escenarios para mostrar como el sistema cumple con las
+funcionalidades exigidas.
+
+Para realizar estas pruebas necesitaremos de dos herramientas mas en el
+entorno virtual de desarrollo.
+
+\begin{itemize}
+  \item django-behave\footnote{Django-Behave, desarrollado por \citeauthor*{website:djangobehave}}
+  \item splinter\footnote{Splinter, desarrollado por \citeauthor{website:splinter}}
+\end{itemize}
+
+\section {django-behave}
+Es un TestRunner de Django para el modulo de Behave BDD, ya en el capítulo tres
+y cuatro vimos como trabaja {\it behave} con BDD.
+
+\subsection{Instalación}
+Para la instalación primero entraremos a nuestro entorno virtual de desarrollo y
+usando {\it pip}\footnote{PIP, es un manejador de paquetes de Python} lo
+instalaremos.
+\begin{verbatim}
+project$ source ~/env/bin/active
+(env)project$ pip install django-behave
+\end{verbatim}
+
+\subsection{Configuración}
+Una vez instalado django-behave pasamos a hacer la configuración en el archivo
+{\it settings.py} y hacemos los cambios como se muestra a continuación.
+\begin{verbatim}
+INSTALLED_APPS = (
+    ..
+    'django_behave',
+)
+
+TEST_RUNNER = 'django_behave.runner.DjangoBehaveTestSuiteRunner'
+\end{verbatim}
+
+\section {splinter}
+Splinter\footnote{Splinter, \url{http://splinter.cobrateam.info/en/latest/},
+consultado en noviembre de 2014} es una herramienta Open Source para hacer
+pruebas en aplicaciones web usando Python. Permite automatizar acciones dentro
+del navegador, como visitar URLs e interactuar con los items.
+
+\subsection{Instalación}
+Para instalarlo usaremos {\it pip} como en los casos anteriores y siempre
+trabajando dentro de nuestro entorno virtual:
+
+\begin{verbatim}
+(env)project$ pip install splinter
+\end{verbatim}
+
+Enhorabuena, ya tenemos instalado {\it django-behave} y {\it splinter}, ahora la
+forma de usarlo es de la siguiente manera:
+
+\begin{verbatim}
+(env)project$ python manage.py test app
+\end{verbatim}
+
+Como ya tenemos configurado django-behave en {\it settings.py} el archivo
+{\it manage.py} reconoce la orden {\it test} y lo que viene después es el
+nombre de la aplicación que en el ejemplo solo se lo llama {\it app}.
+
+Pero {\it splinter} no se ejecuta de manera mágica, necesitamos decirle a los
+{\it features} de BDD de cada aplicación de nuestro proyecto que debe usar
+splinter al momento de ejecutar los tests.
+
+\section{Configuración de los escenarios}
+En el capítulo cuatro pusimos todos los escenarios en una misma carpeta {\it features}
+y cuando lo ejecutábamos con {\it behave} recorría todos los escenarios.
+
+Pero ahora, como ya tenemos el sistema completo con sus aplicaciones respectivas
+para cada funcionalidad vamos a llevar los escenarios a la aplicación que le
+corresponde, veamos el caso de {\it accounts}.
+
+\begin{verbatim}
+flosite
+    |-- manage.py
+    |-- flosite (carpeta principal)
+    |   `-- ...
+    |-- accounts/
+    |  |-- features
+    |  |   |-- behave.ini
+    |  |   |-- environment.py
+    |  |   |-- login.feature
+    |  |   `-- steps
+    |  |       `-- step_login.py
+    |  |-- __init__.py
+    |  |-- models.py
+    |  |-- urls.py
+    |  `-- views.py
+    |-- ...
+\end{verbatim}
+
+En la aplicación {\it accounts} ahora tenemos la carpeta {\it features} y es ahí
+donde están los archivos de Configuración y su escenario {\it login.feature},
+veamos {\it behave.ini}:
+
+\begin{verbatim}
+[behave]
+lang = es
+\end{verbatim}
+
+En este archivo le decimos de manera explicita que los escenarios están escritos
+en {\it Español}.
+
+El archivo {\it environment.py} es el que mas nos interesa ahora, porque es ahí
+donde le decimos a {\it django-behave} que use splinter al momento realizar los
+tests.
+
+\begin{verbatim}
+from splinter.browser import Browser
+
+def before_all(context):
+    context.browser = Browser()
+
+def after_all(context):
+    context.browser.quit()
+    context.browser = None
+\end{verbatim}
+
+El método {\it before\_all}, se encarga de que antes de cualquier cosa inicialice
+el Browser o el navegador.
+
+El método {\it after\_all}, se encarga de que después que realice todos los pasos
+cierre el navegador.
+
+\section{Escenario Account}
+Como ya mencionamos, trabajaremos con {\it accounts} para ver como se ejecuta
+el test con splinter paso a paso. Veamos el archivo {\it login.features}:
+
+{\scriptsize
+\begin{minted}{Gherkin}
+# language: es
+
+Característica: Pagina principal
+    Como un guardia
+    Quiero ingresar al sistema
+    Para registrar ingresos
+
+    Esquema del escenario: Iniciar sesión
+        Dado que ingreso al sistema con el url "http://127.0.0.1:8000/"
+        Y voy a la opcion "Ingresar"
+        Y entro con mi nombre de usuario <username>
+        Y mi contraseña <password>
+        Cuando oprima el boton "Ingresa"
+        Entonces ingreso al sistema y leo el mensaje "Bienvenido"
+
+        Ejemplos:
+            | username | password |
+            | benjamin | asdf     |
+\end{minted}
+}
+
+A diferencia de los escenarios que ya vimos, aquí le decimos que tiene que entrar
+a una dirección URL.
+
+Una vez hecho esto en la carpeta {\bfseries steps} escribimos el código necesario
+para este escenario en el archivo {\it step\_login.py}.
+
+\begin{verbatim}
+# encoding: utf-8
+
+from behave import given, when, then
+
+@given(u'que ingreso al sistema con el url "{url}"')
+def impl(context, url):
+    br = context.browser
+    br.visit(url)
+
+@given(u'voy a la opcion "{option}"')
+def impl(context, option):
+    link = context.browser.find_link_by_text(option).first
+    assert link
+    link.click()
+
+@given(u'entro con mi nombre de usuario {usr}')
+def impl(context, usr):
+    context.browser.fill('identification', usr)
+    context.user = usr
+    assert usr
+
+@given(u'mi contraseña {pwd}')
+def impl(context, pwd):
+    context.browser.fill('password', pwd)
+    context.password = pwd
+    assert pwd
+
+@when(u'oprima el boton "{btn}"')
+def impl(context, btn):
+    button = context.browser.find_by_value(btn).first
+    assert button
+    button.click()
+
+@then(u'ingreso al sistema y leo el mensaje "{msg}"')
+def impl(context, msg):
+    assert msg in context.browser.html
+\end{verbatim}
+
+Cada método recibe como atributo a {\it context} y como en el archivo
+{\it environment.py} ya lo inicializamos con splinter, solo tenemos que llamar
+a sus métodos e ir recorriendo la pagina siguiendo los pasos escritos
+en {\it login.features}.
+
+Una vez escrito y configurado todo esto ejecutamos el test:
+
+\begin{verbatim}
+(env)project$ python manage.py test accounts
+\end{verbatim}
+
+Cuando se ejecuta el test llama a {\it splinter} que a la vez ejecuta un navegador
+de pruebas donde recorre los pasos que hemos definido en los escenarios.
+
+Esto podemos verlo en el siguiente vídeo que es de mi autoría puesto en youtube.com
+con el siguiente título {\it BDD, django-behave and splinter}\footnote{BDD,
+django-behave and splinter: publicado el 2 de diciembre de 2014} en la URL: \url{http://youtu.be/KT6DCFfCFnY}
+

@@ -1,0 +1,78 @@
+%% Creator: Inkscape inkscape 0.48.3.1, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'sequence_register_car.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{792.8bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  {\setmonofont{Monaco}\tiny
+    \texttt{
+  \begin{picture}(1,0.51866801)%
+    \put(0,0){\includegraphics[width=\unitlength]{figures/chapter4/sequence_register_car.pdf}}%
+    \put(0.04894046,0.48587286){\makebox(0,0)[lb]{\smash{/Guardia}}}%
+    \put(0.03884965,0.50504541){\makebox(0,0)[lb]{\smash{<<Actor>>}}}%
+    \put(0.24066599,0.48587286){\makebox(0,0)[lb]{\smash{/:FormRegVehiculo}}}%
+    \put(0.25378406,0.50504541){\makebox(0,0)[lb]{\smash{<<process>>}}}%
+    \put(0.49293643,0.48587286){\makebox(0,0)[lb]{\smash{/Login}}}%
+    \put(0.48587286,0.50504541){\makebox(0,0)[lb]{\smash{<<UI>>}}}%
+    \put(0.14278507,0.43440969){\makebox(0,0)[lb]{\smash{Desea registrar}}}%
+    \put(0.23158426,0.35671039){\makebox(0,0)[lb]{\smash{ingresa nombre de usuario}}}%
+    \put(0.24974773,0.31331988){\makebox(0,0)[lb]{\smash{Ingresa contraseña}}}%
+    \put(0.69071645,0.48587286){\makebox(0,0)[lb]{\smash{/AuthUser}}}%
+    \put(0.67961655,0.50504541){\makebox(0,0)[lb]{\smash{<<system>>}}}%
+    \put(0.5443996,0.28102926){\makebox(0,0)[lb]{\smash{esValido(usr, pwd)}}}%
+    \put(0.5827447,0.23057518){\makebox(0,0)[lb]{\smash{si}}}%
+    \put(0.3617558,0.20030272){\makebox(0,0)[lb]{\smash{usuario}}}%
+    \put(0.88244198,0.48587286){\makebox(0,0)[lb]{\smash{/RegVehiculo}}}%
+    \put(0.8814329,0.50504541){\makebox(0,0)[lb]{\smash{<<system>>}}}%
+    \put(0.56659939,0.1518668){\makebox(0,0)[lb]{\smash{guardarFormulario()}}}%
+    \put(0.56760848,0.10141271){\makebox(0,0)[lb]{\smash{Formulario guardado}}}%
+    \put(0.14278507,0.17608476){\makebox(0,0)[lb]{\smash{llenar el formulario}}}%
+    \put(0.35973764,0.40211907){\makebox(0,0)[lb]{\smash{<<inicia sesion>>}}}%
+  \end{picture}%
+    }
+  }
+\endgroup%

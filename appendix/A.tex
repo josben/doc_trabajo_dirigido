@@ -1,0 +1,100 @@
+
+\chapter{Instalación y configuración de herramientas}
+
+\newpage
+
+\section{Entorno Virtual}
+Para crearnos un entorno virtual de desarrollo que no afecte en las dependencias
+de versiones de otros programas usaremos {\it virtualenv} y para esto seguimos
+los siguientes pasos como {\it root}.
+
+\begin{verbatim}
+# aptitude install python-pip
+# pip install virtualenv
+\end{verbatim}
+
+\begin{itemize}
+  \item {\it pip} - Es un manejador de paquetes de software para Python
+  \item {\it virtualenv} - Es una herramienta para mantener las dependencias
+    requeridas por los diferentes proyectos y separarlas.
+\end{itemize}
+
+Ahora creamos nuestro entorno virtual llamado {\it env} y lo activamos. Y esto
+lo hacemos como un usuario normal ya no como {\it root}.
+
+\begin{verbatim}
+user:~$ virtualenv env
+user:~$ source env/bin/activate
+(env)user:~$
+\end{verbatim}
+
+Note que delante de nuestro nombre de usuario aparece el nombre de nuestro
+entorno virtual: {\it (env)}
+
+\section{Behave}
+Para instalar {\it behave} lo haremos usando {\it pip}, pero lo haremos dentro
+de nuestro entorno virtual de desarrollo.
+
+\begin{verbatim}
+(env)user:~$ pip install behave
+\end{verbatim}
+
+Con esto ya tenemos instalado {\it behave} y lo podemos usar de la siguiente manera:
+
+\begin{verbatim}
+(env)user:~/project/features$ behave registro.feature
+\end{verbatim}
+
+\section{Django-Behave}
+Para la instalación primero entraremos a nuestro entorno virtual de desarrollo y
+usando {\it pip} lo instalaremos.
+
+\begin{verbatim}
+user:~ $ source env/bin/active
+(env)user:~ $ pip install django-behave
+\end{verbatim}
+
+\subsection{Configuración}
+Una vez instalado django-behave pasamos a hacer la configuración en el archivo
+{\it settings.py} y hacemos los cambios como se muestra a continuación.
+\begin{verbatim}
+INSTALLED_APPS = (
+    ..
+    'django_behave',
+)
+
+TEST_RUNNER = 'django_behave.runner.DjangoBehaveTestSuiteRunner'
+\end{verbatim}
+
+
+
+\section{Splinter}
+Para instalarlo usaremos {\it pip} como en los casos anteriores y siempre
+trabajando dentro de nuestro entorno virtual:
+
+\begin{verbatim}
+(env)user:~ $ pip install splinter
+\end{verbatim}
+
+El archivo {\it environment.py} que se encuentra en la carpeta {\it features}
+de cada {\it app} del proyecto es donde escribimos el siguiente código,
+porque es ahí donde le decimos a {\it django-behave} que use splinter al momento
+realizar los tests.
+
+\begin{verbatim}
+from splinter.browser import Browser
+
+def before_all(context):
+    context.browser = Browser()
+
+def after_all(context):
+    context.browser.quit()
+    context.browser = None
+\end{verbatim}
+
+La forma de usarlo es de la siguiente manera:
+
+\begin{verbatim}
+(env)project$ python manage.py test app
+\end{verbatim}
+

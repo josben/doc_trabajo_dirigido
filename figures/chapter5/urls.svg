@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height="244" version="1.1" width="741" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="22" cy="32" fill="#000000" rx="8.0" ry="8.0" stroke="#000000" stroke-width="1"/>
+<rect fill="#00ff" height="42" rx="44" ry="44" stroke="#00ff" stroke-width="1" width="116" x="87" y="17"/>
+<rect fill="#ffffff" height="44" rx="44" ry="44" stroke="#000000" stroke-width="1" width="118" x="86" y="16"/>
+<rect fill="#ffffff" height="42" rx="44" ry="44" stroke="#ffffff" stroke-width="1" width="116" x="87" y="17"/>
+<text font-family="Dialog" font-size="12" x="103" y="35">
+flosite/urls.py</text>
+<polyline fill="none" points="31,32 86,32" stroke="#000000" stroke-width="1"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="74" x2="86" y1="39" y2="32"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="74" x2="86" y1="25" y2="32"/>
+<rect fill="#00ff" height="33" rx="35" ry="35" stroke="#00ff" stroke-width="1" width="118" x="430" y="17"/>
+<rect fill="#ffffff" height="35" rx="35" ry="35" stroke="#000000" stroke-width="1" width="120" x="429" y="16"/>
+<rect fill="#ffffff" height="33" rx="35" ry="35" stroke="#ffffff" stroke-width="1" width="118" x="430" y="17"/>
+<text font-family="Dialog" font-size="12" x="451" y="35">
+apps/urls.py</text>
+<polygon fill="#c8ffff" points="493,124 509,140 493,156 477,140" stroke="#c8ffff" stroke-width="1"/>
+<polygon fill="none" points="493,124 509,140 493,156 477,140" stroke="#3cc83c" stroke-width="1"/>
+<polyline fill="none" points="493,49 493,124" stroke="#333399" stroke-width="1"/>
+<line fill="#333399" stroke="#333399" stroke-width="1" x1="486" x2="493" y1="112" y2="124"/>
+<line fill="#333399" stroke="#333399" stroke-width="1" x1="500" x2="493" y1="112" y2="124"/>
+<rect fill="#00ff" height="33" rx="35" ry="35" stroke="#00ff" stroke-width="1" width="116" x="610" y="125"/>
+<rect fill="#ffffff" height="35" rx="35" ry="35" stroke="#000000" stroke-width="1" width="118" x="609" y="124"/>
+<rect fill="#ffffff" height="33" rx="35" ry="35" stroke="#ffffff" stroke-width="1" width="116" x="610" y="125"/>
+<text font-family="Dialog" font-size="12" x="625" y="143">
+apps/views.py</text>
+<polyline fill="none" points="509,140 609,140" stroke="#000000" stroke-width="1"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="597" x2="609" y1="147" y2="140"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="597" x2="609" y1="133" y2="140"/>
+<text font-family="Dialog" font-size="12" x="531" y="135">
+url valido</text>
+<rect fill="#00ff" height="33" rx="35" ry="35" stroke="#00ff" stroke-width="1" width="116" x="239" y="125"/>
+<rect fill="#ffffff" height="35" rx="35" ry="35" stroke="#000000" stroke-width="1" width="118" x="238" y="124"/>
+<rect fill="#ffffff" height="33" rx="35" ry="35" stroke="#ffffff" stroke-width="1" width="116" x="239" y="125"/>
+<text font-family="Dialog" font-size="12" x="252" y="143">
+404 Not found</text>
+<polyline fill="none" points="477,140 355,140" stroke="#000000" stroke-width="1"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="367" x2="355" y1="133" y2="140"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="367" x2="355" y1="147" y2="140"/>
+<text font-family="Dialog" font-size="12" x="378" y="135">
+url no valido</text>
+<ellipse cx="294" cy="218" fill="#000000" rx="12.0" ry="12.0" stroke="#000000" stroke-width="1"/>
+<ellipse cx="294" cy="218" fill="#ffffff" rx="11.0" ry="11.0" stroke="#ffffff" stroke-width="1"/>
+<ellipse cx="293" cy="217" fill="#000000" rx="7.5" ry="7.5" stroke="#000000" stroke-width="1"/>
+<polyline fill="none" points="294,157 294,206" stroke="#333399" stroke-width="1"/>
+<line fill="#333399" stroke="#333399" stroke-width="1" x1="287" x2="294" y1="194" y2="206"/>
+<line fill="#333399" stroke="#333399" stroke-width="1" x1="301" x2="294" y1="194" y2="206"/>
+<polygon fill="#c8ffff" points="294,24 310,40 294,56 278,40" stroke="#c8ffff" stroke-width="1"/>
+<polygon fill="none" points="294,24 310,40 294,56 278,40" stroke="#3cc83c" stroke-width="1"/>
+<polyline fill="none" points="310,40 430,40" stroke="#333399" stroke-width="1"/>
+<line fill="#333399" stroke="#333399" stroke-width="1" x1="418" x2="430" y1="47" y2="40"/>
+<line fill="#333399" stroke="#333399" stroke-width="1" x1="418" x2="430" y1="33" y2="40"/>
+<text font-family="Dialog" font-size="12" x="342" y="35">
+url valido</text>
+<polyline fill="none" points="202,40 278,40" stroke="#333399" stroke-width="1"/>
+<line fill="#333399" stroke="#333399" stroke-width="1" x1="266" x2="278" y1="47" y2="40"/>
+<line fill="#333399" stroke="#333399" stroke-width="1" x1="266" x2="278" y1="33" y2="40"/>
+<polyline fill="none" points="294,56 294,125" stroke="#333399" stroke-width="1"/>
+<line fill="#333399" stroke="#333399" stroke-width="1" x1="287" x2="294" y1="113" y2="125"/>
+<line fill="#333399" stroke="#333399" stroke-width="1" x1="301" x2="294" y1="113" y2="125"/>
+<text font-family="Dialog" font-size="12" x="296" y="95">
+url no valido</text>
+</svg>

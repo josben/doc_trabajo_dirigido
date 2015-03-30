@@ -1,0 +1,104 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass{harvard-thesis}
+%\usepackage[spanish]{babel}
+%\selectlanguage{spanish}
+%\usepackage[utf8x]{inputenc}
+\usepackage{alltt}
+\usepackage{mdframed}
+\begin{document}
+\pagenumbering{gobble}
+%%%%%%%%% Para el codigo .feature %%%%%%%%%%
+\newcommand{\feature}[1]{\textcolor[rgb]{0.0,0.35,0.6}{#1}}
+\newcommand{\ftable}[1]{\color{orange}}
+\newcommand{\bgcode}[1]{\color[rgb]{0.93,0.93,0.93}}
+\definecolor{bgcode}{rgb}{0.95,0.95,0.95}
+
+%%%%%%%%%%%%%%% %para cambiar la fuente en secciones solamente %%%%%%%%%%%%%%%
+%http://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document
+%\renewcommand{\sfdefault}{phv}
+%{\setmonofont{Monaco} texto ....}
+%\fontfamily{Monaco}\selectfont
+%\newcommand*{\myfontcmd}{\fontfamily{phv}\selectfont}
+%\newenvironment{myfont}{\fontfamily{phv}\selectfont}{\par}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstdefinelanguage{Feature} {
+    morekeywords={
+        Característica, Como, Quiero, Para, Esquema del escenario,
+        Dado, Y, Cuando, Entonces, Pero, Feature, As, In order to,
+        I want, Scenario, Given, And, When, Then, But,
+        },
+    sensitive=false,
+    morecomment=[s]{<}{>},
+    alsoletter={:}
+}
+
+\lstset{
+  framesep=5pt,
+  backgroundcolor=\color[rgb]{0.93,0.93,0.93},
+  basicstyle=\scriptsize,
+  showstringspaces=false,
+  %breaklines=true,
+  %%%%%%%%%%%%%
+  keywordstyle=\feature,
+  identifierstyle=\ttfamily,
+  stringstyle=\ttfamily\color{orange},
+  commentstyle=\color{orange},
+  %%%%%%%%%%%%%
+  %keywordstyle={\bfseries \feature},
+  %numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt,
+%  alsoletter={:,<,>},
+  %morekeywords={Característica, Como, Quiero, Para, Esquema del escenario, Dado, Y, Cuando, Entoces, Pero},
+  escapechar=\&% char to escape out of listings and back to LaTeX
+  alsoletter={:}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Margenes segun especificion de la UMSS
+\marginsize{3cm}{2cm}{1cm}{2cm}
+
+% the front matter
+\input{frontmatter/coverpage}
+\maketitle
+%\copyrightpage
+\abstractpage
+\tableofcontents
+%\authorlist
+\listoffigures
+%\listoftables
+\dedicationpage
+\acknowledgments
+
+\onehalfspacing
+
+% incluude each chapter...
+\include{chapters/chapter1}
+\include{chapters/chapter2}
+\include{chapters/chapter3}
+\include{chapters/chapter4}
+\include{chapters/chapter5}
+\include{chapters/chapter6}
+\include{chapters/chapter7}
+\include{chapters/chapter8}
+
+\singlespacing
+
+\appendix
+\include{appendix/A}
+\include{appendix/B}
+\include{appendix/C}
+
+\singlespacing
+
+% the back matter
+\clearpage
+\bibliography{references}
+\addcontentsline{toc}{chapter}{Bibliografía}
+\bibliographystyle{plainnat}
+%\include{endmatter/colophon}
+
+\end{document}
+

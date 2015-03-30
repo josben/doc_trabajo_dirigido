@@ -1,0 +1,324 @@
+\begin{savequote}[75mm]
+%Nulla facilisi. In vel sem. Morbi id urna in diam dignissim feugiat. Proin molestie tortor eu velit. Aliquam erat volutpat. Nullam ultrices, diam tempus vulputate egestas, eros pede varius leo.
+%\qauthor{Quoteauthor Lastname}
+\end{savequote}
+
+\chapter{Puesta en producción}
+
+\newthought{Para} la puesta en producción del sistema es preciso tomar en cuenta
+otras herramientas como el Sistema Operativo donde se ejecutara el sistema,
+el Servidor Web que usaremos para desplegar el proyecto, etc.
+
+\section{Servidor Debian Linux}
+Debian es una distribución de Linux, un Sistema Operativo Libre con acceso en línea
+a los diferentes repositorios que tiene.
+
+Se eligió Debian por el soporte estable que tiene para servidores y por lo practicó
+que es al momento de instalar los paquetes de software.
+
+La versión que usaremos para el proyecto es Debian 7.7 que tiene el nombre de
+{\it Wheezy}.
+
+\section{Servidor Web Nginx}
+Nginx es un Servidor Web ligero y Libre, ademas de eso es de alto rendimiento.
+Es conocido por su estabilidad, gran conjunto de características, configuración
+simple, y bajo consumo de recursos.
+También cuenta con un buen soporte de para FastCGI. Nginx y FastCGI\footnote{FastCGI
+es un protocolo para interconectar con un Servidor Web} es una buena elección
+al momento de desarrollar con Django y es lo que usaremos para el proyecto,
+aunque no es el único camino.
+
+La forma de instalar en Debian es la siguiente:
+
+\begin{verbatim}
+# aptitude install nginx
+\end{verbatim}
+
+Y la versión que instalará y la que usaremos es la 1.2.1
+
+\section{Base de datos MySQL}
+MySQL es un sistema de Base de Datos estable, rápido, multi-usuario y multi-hilo.
+La principal meta de MySQL es ser rápido, robusto y fácil de usar.
+
+La forma de instalar es la siguiente:
+
+\begin{verbatim}
+# aptitude install mysql-server
+\end{verbatim}
+
+Esto nos instalará la versión 5.5 de MySQL.
+
+\section{Instalación y Configuración del Sistema}
+Para no tener conflictos de versiones de paquetes de software en el servidor
+crearemos un entorno virtual para el proyecto donde ahí instalaremos todos los
+paquetes que son requeridos para el funcionamiento del sistema.
+
+Para ello necesitamos instalar en el servidor {\it virtualenv}, esto nos permitirá
+crear el entorno virtual que necesitamos para el proyecto, pero antes debemos
+instalar {\it python-pip} y una vez hecho esto con {\it pip} instalaremos
+{\it virtualenv}.
+
+\begin{verbatim}
+# aptitude install python-pip
+# pip install virtualenv
+\end{verbatim}
+
+\begin{itemize}
+  \item {\it pip} - Es un manejador de paquetes de software para Python
+  \item {\it virtualenv} - Es una herramienta para mantener las dependencias
+    de las versiones de los paquetes de software requeridas por los diferentes
+    proyectos y separarlas.
+\end{itemize}
+
+Ahora creamos nuestro entorno virtual llamado {\it env} y lo activamos. Y esto
+lo hacemos como un usuario normal ya no como {\it root}.
+
+\begin{verbatim}
+user:~$ virtualenv env
+user:~$ source env/bin/activate
+(env)user:~$
+\end{verbatim}
+
+En Debian y en otras distribuciones Linux se tiene {\it /var/www/} para los sitios
+Web y es ahí donde copiaremos el sistema {\it /var/www/flosite/}.
+
+Pero antes de instalar el sistema crearemos la Base de Datos y un usuario con
+privilegios.
+
+\begin{verbatim}
+mysql> create database projectdb;
+mysql> create user userdb identified by 'xxxxxx';
+mysql> grant all privileges on projectdb.* to userdb;
+\end{verbatim}
+
+Ingresamos a la carpeta del proyecto pero primero activamos el entorno virtual
+que ya creamos anteriormente.
+
+\begin{verbatim}
+user:~$ source env/bin/activate
+(env)user:~$ cd /var/www/flosite/
+(env)user:/var/www/flosite$
+\end{verbatim}
+
+Para facilitar la instalación tenemos el siguiente archivo
+{\it requirements/project.txt}, ahí se tiene todas las dependencias del proyecto
+y lo usamos de la siguiente manera:
+
+\begin{verbatim}
+(env)user:/var/www/flosite$ pip install -r requirements/project.txt
+\end{verbatim}
+
+Hasta este punto ya tenemos todo lo necesario para que el sistema se ejecute sin
+problemas, ahora vamos a sincronizar el proyecto con la Base de Datos para la
+creación de las tablas.
+
+Primero configuramos {\it settings.py} para la Base de Datos.
+
+\begin{verbatim}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'projectdb',
+        'USER': 'userdb',
+        'PASSWORD': 'xxxxxxx',
+        'HOST': '',
+        'PORT': '',
+    }
+}
+\end{verbatim}
+
+Una vez editado y guardado {\it settings.py} sincronizamos el proyecto con la
+Base de Datos y usamos la instrucción {\it syncdb} para ello.
+
+\begin{verbatim}
+(env)user:/var/www/flosite$ python manage.py syncdb
+\end{verbatim}
+
+Y para terminar levantamos el sistema:
+
+\begin{verbatim}
+(env)user:/var/www/flosite$ python manage.py runserver
+\end{verbatim}
+
+En el navegador del servidor ingresamos al URL \url{http://127.0.0.1:8000} y
+efectivamente el sistema esta ejecutándose, pero no pueden ingresar desde otras
+maquinas, como ya contamos con una IP pública hacemos lo siguiente:
+
+\begin{verbatim}
+(env)user:/var/www/flosite$ python manage.py runserver 0.0.0.0:8000
+\end{verbatim}
+
+Ahora todos pueden ingresar al sistema usando el IP del servidor como URL
+\url{http://xxx.xxx.xxx.xxx:8000}
+
+Pero ejecutar el sistema de esta forma es incomodo y ademas que tenemos que
+ejecutarlo manualmente. En la siguiente sección veremos como automatizar esta
+tarea en el servidor.
+
+\section{Configuración en el servidor}
+Bien, ahora es el turno de Nginx y Debian para el paso final de la puesta en
+producción del sistema.
+
+\subsection{Nginx}
+Vamos a los archivos de configuración de Nginx en {\it /etc/nginx/} y en
+{\it sites-available} creamos el archivo {\it flosite.conf}
+
+\begin{verbatim}
+root:~# cd /etc/nginx/sites-available/
+root:/etc/nginx/sites-available# touch flosite.conf
+\end{verbatim}
+
+En {\it flosite.conf} copiamos las siguientes lineas.
+
+\begin{verbatim}
+server {
+    listen 80;
+    server_name IP.de.nuestro.servidor;
+    access_log /var/log/nginx/flosite.access.log;
+    error_log /var/log/nginx/flosite.error.log;
+
+    location /static/ { # STATIC_URL
+        alias /var/www/flosite/staticfiles/; # STATIC_ROOT
+        expires 30d;
+    }
+
+    location /static/admin/ { # STATIC_ADMIN
+        alias /home/user/env/lib/python2.7/site-packages/django/..../admin/;
+        expires 30d;
+    }
+
+    location /media/ { # MEDIA_URL
+        alias /var/www/flosite/media/; # MEDIA_ROOT
+        expires 30d;
+    }
+
+    location / {
+        include fastcgi_params;
+        fastcgi_pass 0.0.0.0:8080;
+        fastcgi_split_path_info ^()(.*)$;
+        fastcgi_read_timeout    20m;
+    }
+}
+\end{verbatim}
+
+Ahora creamos un enlace simbólico en la carpeta {\it sites-enabled}
+
+\begin{verbatim}
+root:/etc/nginx# ln -s sites-available/flosite.conf sites-enabled/
+\end{verbatim}
+
+Reiniciamos Nginx para que reconozca la nueva configuración que hemos cargado.
+
+\begin{verbatim}
+# service nginx restart
+\end{verbatim}
+
+Pero aun nos falta algo, si se fijo en la sección de {\it location} necesitamos
+pasarle un fastcgi a nuestra configuración de Nginx, para esto ejecutamos el
+siguiente comando:
+
+\begin{verbatim}
+(env)user:/var/www/flosite$ python manage.py runfcgi host=0.0.0.0 port=8080
+(env)user:/var/www/flosite$
+\end{verbatim}
+
+Esto crea el {\it fastcgi} que necesita la configuración que creamos en Nginx.
+
+Si vamos al navegador e ingresamos con nuestra IP, efectivamente esta funcionando
+\url{http://ip.de.nuestro.servidor/}
+
+Pero aun hay un comando que hay que escribir manualmente. Ahora es el turno de
+Debian Linux.
+
+\subsection{Configuración en el Servidor Debian Linux}
+Para automatizar la tarea de levantar el sistema al momento de iniciar el servidor
+necesitamos usar {\it update-rc.d} que es el comando usado para decidir la secuencia
+y el runlevel de ejecución del script que crearemos.
+
+Creamos nuestro script {\it flosite} en {\it /etc/init.d/}
+
+\begin{verbatim}
+# touch /etc/init.d/flosite
+\end{verbatim}
+
+Ahora copiamos las lineas a continuación en el archivo creado.
+
+\begin{verbatim}
+#! /bin/bash
+#
+### BEGIN INIT INFO
+# Provides:          flosite
+# Required-Start:    mysql
+# Required-Stop:     mysql
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Inicia el sistema de flosite
+# Description:       Este script fue escrito por Benjamin Perez
+### END INIT INFO
+
+# Este script es para levantar el sistema de seguridad industrial
+echo "This part always gets executed"
+
+case "$1" in
+  start)
+    echo "Starting flosite"
+    echo "Please waith ....."
+    source /home/user/env/bin/activate
+    cd /var/www/flosite
+    python manage.py runfcgi host=0.0.0.0 port=8080
+    deactivate
+    echo "Done" 
+    ;;
+  stop)
+    echo "Stopping flosite"
+    echo "Please waith ..."
+    # TODO
+    echo "Done"
+    ;;
+  restart)
+    echo "Restarting flosite"
+    echo "Please waith ....."
+    # TODO
+    ;;
+  *)
+    echo "Usage: /etc/init.d/flobasic {start|stop|restart}"
+    exit 1
+    ;;
+esac
+
+exit 0
+
+\end{verbatim}
+
+En este script algo que es muy importante son estas lineas:
+
+\begin{verbatim}
+# Required-Start:    mysql
+# Required-Stop:     mysql
+\end{verbatim}
+
+Con estas lineas le decimos que nuestro script se ejecute o se detenga una vez
+que ya inicio o se detuvo MySQL. Esto es importante por que si el script se
+ejecuta antes de MySQL nos dará error y no podremos ingresar al sistema.
+
+Ahora le damos permisos de ejecución:
+
+\begin{verbatim}
+# chmod +x /etc/init.d/flosite
+\end{verbatim}
+
+Finalmente ejecutamos {\it update-rc.d} para que el script se ejecute automáticamente
+al iniciar el servidor.
+
+\begin{verbatim}
+# update-rc.d /etc/init.d/flosite defaults
+\end{verbatim}
+
+Al usar la opción {\it defaults} update-rc.d creará enlaces para iniciar el servicio
+en los runlevels 2345 y detendrá el servicio en los runlevels 016.
+
+Los {\it runlevels} básicamente se refieren a los diferentes niveles que tiene
+un Servidor Linux para iniciar y parar servicios.
+
+Con esto ya tenemos un servidor listo para ejecutar automáticamente el proyecto.
+
